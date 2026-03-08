@@ -28,7 +28,7 @@ export default function MainPage() {
   const [showIntro, setShowIntro] = useState(!_introPlayed);
 
   useEffect(() => {
-    document.title = 'Your Name — Portfolio';
+    document.title = "Isaq Ferrer's Cool Portfolio Website";
   }, []);
 
   return (
