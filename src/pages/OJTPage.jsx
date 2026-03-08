@@ -33,7 +33,7 @@ function OJTNavbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 select-none">
           <img
-            src="/carlogo.png"
+            src="/carlogo.jpg"
             alt="Logo"
             width={28}
             height={28}
