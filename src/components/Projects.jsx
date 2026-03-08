@@ -6,42 +6,42 @@ const EASE = [0.22, 1, 0.36, 1];
 
 const projects = [
   {
-    title: 'E-Commerce Platform',
+    title: 'e-STREAM: Event Scheduling, Tracking, Registration, Evaluation, Attendance, and Management System',
     description:
-      'A fully-featured online store with real-time inventory management, Stripe payment processing, and an intuitive admin dashboard used by 1,000+ customers.',
-    tags: ['Next.js', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
+      'A fully-featured online event management platform built with Laravel. Streamlined event creation, registration, certificate sending/generation, survey sending/creation, in-depth analytics and attendee management for seamless experiences.',
+    tags: ['Laravel', 'MySQL', 'Tailwind CSS', 'Daisy UI'],
     accent: '#f72585',
     github: '#',
-    live: '#',
+    live: 'https://dost-erms.ojt-ims-bsit.net/',
     featured: true,
   },
   {
-    title: 'AI Task Manager',
+    title: 'AI Powered Legal Docs Assistant',
     description:
-      'Smart productivity tool that uses AI to intelligently categorize, prioritize, and schedule tasks. Reduced planning time by 60% for early adopters.',
-    tags: ['React', 'OpenAI API', 'Node.js', 'MongoDB'],
+      'Smart document assistant that uses AI to analyze, summarize, and extract key insights from legal documents, contracts, and case files, built with React and SpringBoot.',
+    tags: ['React', 'SpringBoot', 'PostgreSQL'],
     accent: '#a15aff',
-    github: '#',
+    github: 'https://github.com/laffeyy0629/AI-Powered-Legal-Docs-Assistant',
     live: '#',
     featured: true,
   },
   {
-    title: 'Real-time Chat App',
+    title: 'MagiGears: Steampunk FPS Game',
     description:
-      'Scalable messaging platform with end-to-end encryption, live presence indicators, and seamless file sharing, built for remote teams.',
-    tags: ['React', 'Socket.io', 'Redis', 'Docker'],
+      'Small-scale FPS game built with Unity, featuring a steampunk world, unique weapons, and fast-paced combat. Developed as a passion project to explore game design and mechanics.',
+    tags: ['Unity', 'C#', 'Blender'],
     accent: '#ff375f',
     github: '#',
-    live: '#',
+    live: 'https://youtu.be/kEAUVxEGyjM',
     featured: false,
   },
   {
-    title: 'Portfolio Dashboard',
+    title: 'Feedback and Assessment System',
     description:
-      'Investment portfolio tracker with real-time market data feeds, advanced analytics, and intelligent allocation recommendations powered by Python.',
-    tags: ['Vue.js', 'Python', 'FastAPI', 'Chart.js'],
+      'Simple web app for collecting and analyzing feedback, built with JSP and MySQL.',
+    tags: ['JSP', 'MySQL', 'Java', 'Bootstrap'],
     accent: '#32d74b',
-    github: '#',
+    github: 'https://github.com/laffeyy0629/Feedback-and-Assessment-System',
     live: '#',
     featured: false,
   },
@@ -141,7 +141,7 @@ function ProjectCard({ project, index }) {
         <h3 className="text-xl font-bold text-white mb-3 group-hover:text-white transition-colors">
           {project.title}
         </h3>
-        <p className="text-[#555] text-sm leading-relaxed mb-6 flex-1">
+        <p className="text-[#777] text-sm leading-relaxed mb-6 flex-1">
           {project.description}
         </p>
 
@@ -163,14 +163,14 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative overflow-hidden py-36 px-6 bg-[#080808]">
+    <section id="projects" className="relative overflow-hidden py-36 px-6 bg-black">
       {/* Section number watermark */}
       <div
         aria-hidden="true"
         className="absolute -top-4 right-0 select-none pointer-events-none font-black leading-none tracking-[-0.04em] text-white/[0.018]"
         style={{ fontSize: 'clamp(9rem, 24vw, 20rem)' }}
       >
-        03
+        04
       </div>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -189,7 +189,7 @@ export default function Projects() {
           <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold text-white tracking-tight">
             Things I've built.
           </h2>
-          <p className="mt-5 text-[#555] text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="mt-5 text-[#777] text-lg max-w-xl mx-auto leading-relaxed">
             A selection of projects that showcase my skills and passion for
             building great software.
           </p>
@@ -211,10 +211,10 @@ export default function Projects() {
           className="mt-14 text-center"
         >
           <a
-            href="https://github.com"
+            href="https://github.com/laffeyy0629"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[#555] hover:text-white transition-colors text-sm font-medium group"
+            className="inline-flex items-center gap-2 text-[#777] hover:text-white transition-colors text-sm font-medium group"
           >
             <Github size={16} />
             See more on GitHub

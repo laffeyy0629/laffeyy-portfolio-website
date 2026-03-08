@@ -11,6 +11,7 @@ import About from '../components/About';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import Experience from '../components/Experience';
+import Languages from '../components/Languages';
 import Downloads from '../components/Downloads';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -47,11 +48,14 @@ export default function MainPage() {
       <Marquee />
       <About />
       <Skills />
+      <Languages />
       <Marquee reverse dim />
       <Projects />
       <Experience />
+      <Marquee />
       <Downloads />
       <Contact />
+      <Marquee reverse dim />
       <Footer />
 
       <KonamiEasterEgg />

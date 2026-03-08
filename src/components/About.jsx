@@ -2,10 +2,10 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 
 const stats = [
-  { value: '3+', label: 'Years Experience' },
-  { value: '20+', label: 'Projects Shipped' },
-  { value: '12+', label: 'Technologies' },
-  { value: '5★', label: 'Client Rating' },
+  { value: '4+', label: 'Years Experience' },
+  { value: '8+', label: 'Projects Shipped' },
+  { value: '20+', label: 'Technologies' },
+  { value: '5★', label: 'Coolness Factor😎' },
 ];
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -57,7 +57,7 @@ function StatCard({ value, label, delay = 0 }) {
       <div className="text-[clamp(1.8rem,4vw,2.4rem)] font-bold text-white mb-0.5 leading-none">
         {display}
       </div>
-      <div className="text-[#444] text-xs font-medium mt-1.5">{label}</div>
+      <div className="text-[#666] text-xs font-medium mt-1.5">{label}</div>
     </motion.div>
   );
 }
@@ -109,14 +109,12 @@ export default function About() {
                 I'm a passionate full-stack developer who loves creating elegant,
                 efficient, and user-centric applications. I bridge the gap between
                 design and functionality — delivering seamless experiences that
-                feel as good as they look.
+                feel as good as they look, NO CAP😤🔥.
               </p>
             </FadeUp>
             <FadeUp delay={0.3}>
-              <p className="text-[#555] text-lg leading-relaxed mb-10">
-                When I'm not coding, you'll find me exploring new technologies,
-                contributing to open-source, or designing interfaces that push
-                creative boundaries.
+              <p className="text-[#777] text-lg leading-relaxed mb-10">
+                When I'm not coding, I am probably on my coffee break, watching anime, playing games, or reading a manga/LNs.
               </p>
             </FadeUp>
             <FadeUp delay={0.4}>
@@ -154,7 +152,7 @@ export default function About() {
                 style={{ border: '1px solid rgba(247,37,133,0.2)' }}
               >
                 <img
-                  src="/avatar.jpg"
+                  src="/avatarAbout3.jpg"
                   alt="Your Name"
                   className="w-full h-full object-cover object-top"
                   onError={(e) => {

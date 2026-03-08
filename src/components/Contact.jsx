@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, ArrowUpRight } from 'lucide-react';
+import { Github, Linkedin, Twitter, Facebook, Mail, ArrowUpRight } from 'lucide-react';
 import { useMagnetic } from '../hooks/useMagnetic';
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -8,19 +8,19 @@ const socials = [
   {
     label: 'GitHub',
     icon: Github,
-    href: 'https://github.com',
+    href: 'https://github.com/laffeyy0629',
     color: '#e2e8f0',
   },
   {
     label: 'LinkedIn',
     icon: Linkedin,
-    href: 'https://linkedin.com',
+    href: 'https://linkedin.com/in/javez-isaq-ferrer-1137333a4/',
     color: '#60a5fa',
   },
   {
-    label: 'Twitter',
-    icon: Twitter,
-    href: 'https://twitter.com',
+    label: 'Facebook',
+    icon: Facebook,
+    href: 'https://facebook.com/cykagozaimasu',
     color: '#38bdf8',
   },
 ];
@@ -36,7 +36,7 @@ export default function Contact() {
         className="absolute -top-4 right-0 select-none pointer-events-none font-black leading-none tracking-[-0.04em] text-white/[0.018]"
         style={{ fontSize: 'clamp(9rem, 24vw, 20rem)' }}
       >
-        05
+        06
       </div>
       {/* Background glow */}
       <div
@@ -65,7 +65,7 @@ export default function Contact() {
             <br />
             <span className="text-gradient-blue">something great.</span>
           </h2>
-          <p className="text-[#555] text-xl mb-14 max-w-lg mx-auto leading-relaxed">
+          <p className="text-[#777] text-xl mb-14 max-w-lg mx-auto leading-relaxed">
             Have a project in mind, a question, or just want to say hello?
             My inbox is always open — I'll respond promptly.
           </p>
@@ -73,7 +73,7 @@ export default function Contact() {
           {/* Primary email button */}
           <motion.a
             ref={magSayHello.ref}
-            href="mailto:hello@yourname.com"
+            href="mailto:isaqf.0629@gmail.com"
             style={magSayHello.style}
             onMouseMove={magSayHello.onMouseMove}
             onMouseLeave={magSayHello.onMouseLeave}

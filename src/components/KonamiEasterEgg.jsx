@@ -246,7 +246,7 @@ export default function KonamiEasterEgg() {
               className="font-mono text-sm tracking-widest mb-10 max-w-sm"
               style={{ color: 'rgba(255,255,255,0.35)' }}
             >
-              You found the secret. Konami code approved ✓
+              You found the secret. Konami code approved ✓ GIF by OffScript
             </motion.p>
 
             {/* ── GIF frame ──────────────────────────────────────────────── */}

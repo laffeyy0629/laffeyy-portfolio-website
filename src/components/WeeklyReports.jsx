@@ -132,7 +132,7 @@ function ReportRow({ report, index }) {
           <p className="text-white text-[14px] font-semibold tracking-tight truncate group-hover/row:text-white transition-colors">
             {report.title}
           </p>
-          <p className="font-mono text-[10px] text-[#303030] tracking-[0.18em] mt-0.5">
+          <p className="font-mono text-[10px] text-[#666] tracking-[0.18em] mt-0.5">
             {report.dateRange}
           </p>
         </div>
@@ -163,7 +163,7 @@ function ReportRow({ report, index }) {
           <motion.span
             animate={{ rotate: expanded ? 180 : 0 }}
             transition={{ duration: 0.25, ease: EASE }}
-            className="text-[#383838]"
+            className="text-[#777]"
           >
             <ChevronDown size={15} />
           </motion.span>
@@ -188,8 +188,8 @@ function ReportRow({ report, index }) {
                 className="rounded-xl px-5 py-4"
                 style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.05)' }}
               >
-                <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#2a2a2a] mb-2">Summary</p>
-                <p className="text-[#4a4a4a] text-[13px] leading-relaxed">{report.summary}</p>
+                <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#666] mb-2">Summary</p>
+                <p className="text-[#888] text-[13px] leading-relaxed">{report.summary}</p>
               </div>
             </div>
           </motion.div>
@@ -252,7 +252,7 @@ export default function WeeklyReports() {
           transition={{ duration: 0.65, delay: 0.25, ease: EASE }}
           className="flex flex-wrap items-center gap-6 mb-16"
         >
-          <p className="text-[#3a3a3a] text-base leading-relaxed flex items-center gap-3">
+          <p className="text-[#777] text-base leading-relaxed flex items-center gap-3">
             <ClipboardList size={14} className="text-[#b44af7] shrink-0" />
             Weekly progress reports filed during the OJT period.
           </p>
@@ -261,17 +261,17 @@ export default function WeeklyReports() {
           <div className="flex items-center gap-4 ml-auto">
             <div className="text-center">
               <p className="text-white font-bold text-xl leading-none">{reports.length}</p>
-              <p className="font-mono text-[9px] text-[#282828] tracking-[0.25em] uppercase mt-1">Total</p>
+              <p className="font-mono text-[9px] text-[#666] tracking-[0.25em] uppercase mt-1">Total</p>
             </div>
             <div className="w-px h-8 bg-white/[0.05]" />
             <div className="text-center">
               <p className="font-bold text-xl leading-none" style={{ color: '#32d74b' }}>{submitted}</p>
-              <p className="font-mono text-[9px] text-[#282828] tracking-[0.25em] uppercase mt-1">Filed</p>
+              <p className="font-mono text-[9px] text-[#666] tracking-[0.25em] uppercase mt-1">Filed</p>
             </div>
             <div className="w-px h-8 bg-white/[0.05]" />
             <div className="text-center">
               <p className="font-bold text-xl leading-none" style={{ color: '#ff9f0a' }}>{reports.length - submitted}</p>
-              <p className="font-mono text-[9px] text-[#282828] tracking-[0.25em] uppercase mt-1">Incoming</p>
+              <p className="font-mono text-[9px] text-[#666] tracking-[0.25em] uppercase mt-1">Incoming</p>
             </div>
           </div>
         </motion.div>

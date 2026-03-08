@@ -16,7 +16,7 @@ const downloads = [
     heading: 'One-page résumé',
     desc: 'A concise snapshot of my skills, experience, and recent projects — optimised for recruiters.',
     meta: 'PDF · 1 page · Updated 2026',
-    file: '/downloads/resume.pdf',
+    file: '/downloads/Ferrer, Javez Isaq B. - Resume.pdf',
     color: '#f72585',
     bg: '#0d0306',
   },
@@ -27,7 +27,7 @@ const downloads = [
     heading: 'Full CV',
     desc: 'Complete academic and professional history including education, projects, and technical depth.',
     meta: 'PDF · 2–3 pages · Updated 2026',
-    file: '/downloads/cv.pdf',
+    file: '/downloads/Ferrer, Javez Isaq B. - CV.pdf',
     color: '#b44af7',
     bg: '#08040d',
   },
@@ -38,7 +38,7 @@ const downloads = [
     heading: 'Cover letter',
     desc: 'My motivation, values, and what I bring to a team — tailored for software development roles.',
     meta: 'PDF · 1 page · Updated 2026',
-    file: '/downloads/cover-letter.pdf',
+    file: '/downloads/Ferrer, Javez Isaq B. - Cover Letter.pdf',
     color: '#4361ee',
     bg: '#03040e',
   },
@@ -102,12 +102,12 @@ function DownloadCard({ doc, index }) {
           >
             {doc.heading}
           </h3>
-          <p className="text-[#383838] text-[13px] leading-relaxed">{doc.desc}</p>
+          <p className="text-[#777] text-[13px] leading-relaxed">{doc.desc}</p>
         </div>
 
         {/* Meta + download */}
         <div className="flex items-center justify-between pt-5 border-t border-white/[0.05]">
-          <span className="font-mono text-[10px] text-[#242424] tracking-[0.18em]">
+          <span className="font-mono text-[10px] text-[#666] tracking-[0.18em]">
             {doc.meta}
           </span>
 
@@ -160,12 +160,13 @@ export default function Downloads() {
   return (
     <section id="downloads" className="relative overflow-hidden py-36 px-6 bg-black">
       {/* Section watermark */}
-      <span
-        className="absolute top-12 right-8 font-black text-[clamp(5rem,14vw,11rem)] leading-none select-none pointer-events-none"
-        style={{ color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.03)' }}
+      <div
+        aria-hidden="true"
+        className="absolute -top-4 right-0 select-none pointer-events-none font-black leading-none tracking-[-0.04em] text-white/[0.018]"
+        style={{ fontSize: 'clamp(9rem, 24vw, 20rem)' }}
       >
-        05
-      </span>
+        06
+      </div>
 
       <div className="max-w-5xl mx-auto">
         {/* Label */}
@@ -202,7 +203,7 @@ export default function Downloads() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, delay: 0.25, ease: EASE }}
-          className="text-[#3a3a3a] text-base leading-relaxed max-w-xl mb-16"
+          className="text-[#777] text-base leading-relaxed max-w-xl mb-16"
         >
           Everything you need to evaluate my work — available to download instantly.
         </motion.p>
