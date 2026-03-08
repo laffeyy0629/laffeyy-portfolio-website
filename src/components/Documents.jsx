@@ -143,6 +143,7 @@ function DocCard({ doc, index }) {
               <a
                 href={doc.url}
                 download
+                rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[10px] tracking-[0.15em] uppercase transition-all duration-250"
                 style={{
                   color: '#555',

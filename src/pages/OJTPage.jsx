@@ -101,12 +101,20 @@ function SectionBridge() {
 //  RESUME VIDEO
 //  Replace YOUTUBE_VIDEO_ID with your actual YouTube video ID
 //  e.g. for https://youtu.be/dQw4w9WgXcQ the ID is dQw4w9WgXcQ
+//  YouTube IDs are exactly 11 characters: letters, digits, _ or -
 // ─────────────────────────────────────────────────────────
 const YOUTUBE_VIDEO_ID = 'YOUR_VIDEO_ID_HERE';
 
+// Whitelist: YouTube IDs are always exactly 11 URL-safe chars.
+// Reject anything that doesn't match before putting it in a src URL.
+const VALID_YT_ID = /^[A-Za-z0-9_-]{11}$/;
+
 function ResumeVideo() {
-  const embedUrl = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1&color=white`;
   const isPlaceholder = YOUTUBE_VIDEO_ID === 'YOUR_VIDEO_ID_HERE';
+  const safeId = !isPlaceholder && VALID_YT_ID.test(YOUTUBE_VIDEO_ID) ? YOUTUBE_VIDEO_ID : null;
+  const embedUrl = safeId
+    ? `https://www.youtube.com/embed/${safeId}?rel=0&modestbranding=1&color=white`
+    : null;
 
   return (
     <section id="resume-video" className="relative py-32 px-6 overflow-hidden">
@@ -185,7 +193,7 @@ function ResumeVideo() {
             />
           ))}
 
-          {isPlaceholder ? (
+          {isPlaceholder || !embedUrl ? (
             /* Placeholder shown until a real video ID is set */
             <div
               className="aspect-video flex flex-col items-center justify-center gap-4"
@@ -208,6 +216,7 @@ function ResumeVideo() {
                 height="100%"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                sandbox="allow-scripts allow-popups"
                 allowFullScreen
                 loading="lazy"
                 className="block"

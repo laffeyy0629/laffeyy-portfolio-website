@@ -464,6 +464,7 @@ function MusicCard({ hobby, index }) {
               height="152"
               frameBorder="0"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              sandbox="allow-scripts allow-same-origin allow-presentation"
               loading="lazy"
               title="Spotify — J-Rock Playlist"
             />

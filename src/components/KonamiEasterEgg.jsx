@@ -45,6 +45,7 @@ const FLOAT_STARS = Array.from({ length: 28 }, (_, i) => ({
 export default function KonamiEasterEgg() {
   const [active, setActive] = useState(false);
   const [particles, setParticles] = useState([]);
+  const [gifFailed, setGifFailed] = useState(false);
   const bufferRef = useRef([]);
 
   // ── Key listener ──────────────────────────────────────────────────────────
