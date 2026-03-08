@@ -33,7 +33,7 @@ function OJTNavbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 select-none">
           <img
-            src="/logo.svg"
+            src="/carlogo.png"
             alt="Logo"
             width={28}
             height={28}
@@ -41,7 +41,7 @@ function OJTNavbar() {
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
           <span className="text-white font-semibold text-lg tracking-tight">
-            YourName<span className="text-[#f72585]">.</span>
+            IsaqF<span className="text-[#f72585]">.</span>
           </span>
         </Link>
 
