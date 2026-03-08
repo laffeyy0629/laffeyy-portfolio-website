@@ -250,8 +250,8 @@ function OJTFooter() {
 
 export default function OJTPage() {
   useEffect(() => {
-    document.title = 'OJT Docs — Your Name';
-    return () => { document.title = 'Your Name — Portfolio'; };
+    document.title = "Isaq Ferrer's Cool Portfolio Website";
+    return () => { document.title = "Isaq Ferrer's Cool Portfolio Website"; };
   }, []);
 
   return (
