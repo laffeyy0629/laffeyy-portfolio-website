@@ -20,13 +20,13 @@ const EASE = [0.22, 1, 0.36, 1];
 const OJT_ACTIVITIES = [
   {
     id: 1,
-    title: 'Lesson 1: Introduction to Web Development',
+    title: 'Work Accomplishment Report Video - Weeks 1-4',
     description: 'Overview of modern web technologies and frameworks',
     type: 'video',
     videoId: 'YOUR_VIDEO_ID_1', // Replace with actual YouTube video ID
-    date: '2026-01-15',
-    tags: ['Lesson 1', 'Introduction'],
-    category: 'coding', // coding, design, documentation, presentation, research
+    date: '2026-03-21',
+    tags: ['Weeks 1-4', 'Work Overview'],
+    category: 'documentation', // coding, design, documentation, presentation, research
   },
   {
     id: 2,
@@ -34,19 +34,19 @@ const OJT_ACTIVITIES = [
     description: 'Key work ethics and behaviors for success in a professional environment and what to do if encountering sexual harrassment in the workplace.',
     type: 'pdf',
     pdfUrl: '/ojtActivities/Lesson 2 - Learning Exercise.pdf', // Replace with actual PDF path
-    date: '2026-01-20',
+    date: '2026-03-11',
     tags: ['Lesson 2', 'Work Ethics, Behavior, and Laws'],
-    category: 'written activity',
+    category: 'written_activity',
   },
   {
     id: 3,
-    title: 'Lesson 3: React Component Architecture',
-    description: 'Building scalable React applications with proper component structure',
-    type: 'video',
-    videoId: 'YOUR_VIDEO_ID_2',
-    date: '2026-01-27',
-    tags: ['Lesson 3', 'React'],
-    category: 'coding',
+    title: 'Lesson 3: Learning Exercise About the Company and the Environment',
+    description: 'Overview of the company, its culture, and the work environment.',
+    type: 'pdf',
+    pdfUrl: '/ojtActivities/Lesson 3 - Learning Exercise.pdf',
+    date: '2026-03-12',
+    tags: ['Lesson 3', 'Company Overview'],
+    category: 'written_activity',
   },
   // Add more activities as needed
 ];
@@ -58,6 +58,7 @@ const CATEGORY_COLORS = {
   documentation: { primary: '#06ffa5', secondary: '#00d9ff', name: 'Documentation' },
   presentation: { primary: '#ffb703', secondary: '#fb8500', name: 'Presentation' },
   research: { primary: '#90e0ef', secondary: '#48cae4', name: 'Research' },
+  written_activity: { primary: '#ff6b6b', secondary: '#ffa502', name: 'Written Activity' },
 };
 
 const VALID_YT_ID = /^[A-Za-z0-9_-]{11}$/;
@@ -452,7 +453,7 @@ function ActivityCard({ activity, index, bentoSpan = '', size = 'normal', mouseP
           });
         }
       }}
-      className={`group relative rounded-3xl overflow-hidden cursor-pointer ${bentoSpan}`}
+      className={`group relative rounded-3xl overflow-hidden ${bentoSpan}`}
       style={{
         background: 'rgba(255,255,255,0.02)',
         border: '1px solid rgba(255,255,255,0.08)',
@@ -545,9 +546,16 @@ function ActivityCard({ activity, index, bentoSpan = '', size = 'normal', mouseP
       <div className="relative h-full flex flex-col" style={{ transform: 'translateZ(0)' }}>
         {/* Thumbnail/Preview with parallax */}
         <motion.div
-          className={`relative overflow-hidden ${
+          className={`relative overflow-hidden cursor-pointer ${
             isFeatured ? 'aspect-video' : isWide ? 'aspect-[21/9]' : 'aspect-video'
           }`}
+          onClick={(e) => {
+            if (isVideo) {
+              window.open(`https://youtube.com/watch?v=${activity.videoId}`, '_blank', 'noopener,noreferrer');
+            } else if (activity.pdfUrl) {
+              window.open(activity.pdfUrl, '_blank', 'noopener,noreferrer');
+            }
+          }}
           style={{
             transform: isHovered ? `translateZ(30px) scale(1.05)` : 'translateZ(0)',
             transition: 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
@@ -637,6 +645,41 @@ function ActivityCard({ activity, index, bentoSpan = '', size = 'normal', mouseP
                 </motion.div>
               </motion.div>
             </>
+          ) : !isVideo && activity.pdfUrl ? (
+            <div className="w-full h-full relative" style={{ background: '#f8f9fa' }}>
+              <iframe
+                src={`${activity.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                className="w-full h-[150%] pointer-events-none relative z-0"
+                style={{ border: 'none', transform: 'scale(0.8)', transformOrigin: 'top center' }}
+                title={activity.title}
+                scrolling="no"
+              />
+              {/* Gradient overlay */}
+              <div
+                className="absolute inset-0 z-10"
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%)',
+                }}
+              />
+              
+              {/* Overlay icon with pulse effect */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
+                initial={{ opacity: 0.8 }}
+                animate={{ opacity: isHovered ? 1 : 0.8 }}
+              >
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center"
+                  style={{
+                    background: `linear-gradient(135deg, ${primaryColor}cc, ${secondaryColor}cc)`,
+                    boxShadow: `0 0 40px ${primaryColor}80, 0 10px 20px rgba(0,0,0,0.4)`,
+                    backdropFilter: 'blur(4px)',
+                  }}
+                >
+                  <FileText size={28} className="text-white" />
+                </div>
+              </motion.div>
+            </div>
           ) : (
             <motion.div
               className="w-full h-full flex items-center justify-center relative overflow-hidden"
@@ -783,29 +826,43 @@ function ActivityCard({ activity, index, bentoSpan = '', size = 'normal', mouseP
               })}
             </motion.span>
 
-            <motion.button
-              whileHover={{ scale: 1.08, x: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300"
-              style={{
-                color: 'white',
-                background: `linear-gradient(135deg, ${primaryColor}33, ${secondaryColor}26)`,
-                border: `1px solid ${primaryColor}4d`,
-                boxShadow: isHovered ? `0 0 30px ${primaryColor}4d` : 'none',
-              }}
-            >
-              {isVideo ? (
-                <>
-                  <PlayCircle size={14} />
-                  Watch
-                </>
-              ) : (
-                <>
-                  <Download size={14} />
-                  Download
-                </>
-              )}
-            </motion.button>
+            {isVideo ? (
+              <motion.button
+                onClick={() => window.open(`https://youtube.com/watch?v=${activity.videoId}`, '_blank', 'noopener,noreferrer')}
+                whileHover={{ scale: 1.08, x: 5 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300"
+                style={{
+                  color: 'white',
+                  background: `linear-gradient(135deg, ${primaryColor}33, ${secondaryColor}26)`,
+                  border: `1px solid ${primaryColor}4d`,
+                  boxShadow: isHovered ? `0 0 30px ${primaryColor}4d` : 'none',
+                }}
+              >
+                <PlayCircle size={14} />
+                Watch
+              </motion.button>
+            ) : (
+              <motion.a
+                href={activity.pdfUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.08, x: 5 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300"
+                style={{
+                  color: 'white',
+                  background: `linear-gradient(135deg, ${primaryColor}33, ${secondaryColor}26)`,
+                  border: `1px solid ${primaryColor}4d`,
+                  boxShadow: isHovered ? `0 0 30px ${primaryColor}4d` : 'none',
+                  textDecoration: 'none'
+                }}
+              >
+                <Download size={14} />
+                Download
+              </motion.a>
+            )}
           </div>
         </motion.div>
       </div>

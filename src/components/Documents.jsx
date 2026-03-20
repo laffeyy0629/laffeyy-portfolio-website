@@ -15,56 +15,74 @@ const documents = [
   {
     id: 1,
     title: 'Endorsement Letter',
-    category: 'Official',
+    category: 'Requirement',
     desc: 'Letter from the institution endorsing the student for OJT placement.',
-    date: 'Jan 15, 2026',
-    url: '/docs/endorsement-letter.pdf',
+    date: 'Feb 23, 2026',
+    url: '/docs/Ferrer, Javez Isaq B._Endorsement Letter.pdf',
     download: true,
   },
   {
     id: 2,
-    title: 'MOA / Memorandum of Agreement',
-    category: 'Official',
+    title: 'Notarized MOA / Memorandum of Agreement',
+    category: 'Requirement',
     desc: 'Signed agreement between the school and the host company.',
-    date: 'Jan 20, 2026',
-    url: '/docs/moa.pdf',
+    date: 'Apr, 08 2025',
+    url: '/docs/Xtreme-Offshore-Outsourcing-Inc.-MOA.pdf',
     download: true,
   },
   {
     id: 3,
-    title: 'OJT Application Form',
+    title: 'Good Moral Certificate',
     category: 'Requirement',
-    desc: 'Accomplished application form submitted prior to deployment.',
-    date: 'Jan 10, 2026',
-    url: '/docs/application-form.pdf',
+    desc: 'Certificate issued by the school attesting to the student’s good moral character.',
+    date: 'Mar 13, 2026',
+    url: '/docs/Ferrer, Javez Isaq B_Good Moral Cert_.pdf',
     download: true,
   },
   {
     id: 4,
-    title: 'Parent / Guardian Consent',
+    title: 'Consent Form',
     category: 'Requirement',
     desc: 'Signed parental consent form for OJT participation.',
-    date: 'Jan 10, 2026',
-    url: '/docs/consent-form.pdf',
+    date: 'Mar 17, 2026',
+    url: '/docs/Ferrer, Javez Isaq B._Consent Form.pdf',
     download: true,
   },
   {
     id: 5,
-    title: 'Medical Certificate',
+    title: 'Acceptance Letter',
     category: 'Requirement',
-    desc: 'Medical clearance certificate issued prior to OJT deployment.',
-    date: 'Jan 12, 2026',
-    url: '/docs/medical-certificate.pdf',
-    download: false,
+    desc: 'Letter of acceptance from the host company for OJT placement.',
+    date: 'February 23, 2026',
+    url: '/docs/Ferrer, Javez Isaq B_Acceptance Letter_XOO.pdf',
+    download: true,
   },
   {
     id: 6,
-    title: 'Waiver Form',
-    category: 'Official',
-    desc: 'Liability waiver signed and submitted to the department.',
-    date: 'Jan 20, 2026',
-    url: '/docs/waiver.pdf',
+    title: 'Training Partner Sheet',
+    category: 'Requirement',
+    desc: 'Form listing the details of the training partner (company) for OJT.',
+    date: 'Mar 13, 2026',
+    url: '/docs/Ferrer, Javez Isaq B._TRAINING PARTNER SHEET.pdf',
     download: true,
+  },
+  {
+    id: 7,
+    title: 'Student Information Sheet',
+    category: 'Requirement',
+    desc: 'Form listing the details of the student for OJT.',
+    date: 'Mar 13, 2026',
+    url: '/docs/Ferrer, Javez Isaq B._STUDENT-INFORMATION-SHEET.pdf',
+    download: true,
+  },
+  {
+    id: 8,
+    title: 'DTR / Daily Time Record',
+    category: 'Requirement',
+    desc: 'Record of student’s daily attendance and hours during OJT.',
+    date: 'Mar 13, 2026',
+    url: 'https://drive.google.com/drive/folders/1q0gqGV_ooey54ZMvaS94B-QzWFqqk8eG?usp=sharing',
+    download: false,
   },
 ];
 
@@ -146,12 +164,20 @@ function DocCard({ doc, index }) {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[10px] tracking-[0.15em] uppercase transition-all duration-250"
                 style={{
-                  color: '#555',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.07)',
+                  color: '#fff',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.3)',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#ccc'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = '#555'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; }}
+                onMouseEnter={(e) => { 
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; 
+                  e.currentTarget.style.boxShadow = '0 0 12px rgba(255,255,255,0.2)'; 
+                  e.currentTarget.style.border = '1px solid rgba(255,255,255,0.5)';
+                }}
+                onMouseLeave={(e) => { 
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; 
+                  e.currentTarget.style.boxShadow = 'none'; 
+                  e.currentTarget.style.border = '1px solid rgba(255,255,255,0.3)';
+                }}
               >
                 <Download size={10} />
                 Save
