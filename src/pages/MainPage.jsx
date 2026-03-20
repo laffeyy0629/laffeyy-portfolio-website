@@ -33,7 +33,7 @@ export default function MainPage() {
 
   return (
     <motion.div
-      className="bg-black min-h-screen"
+      className="bg-black min-h-screen relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       // Delay matches wipe-out timing (~0.43s) so content appears as the bar exits

@@ -177,6 +177,7 @@ export default function Downloads() {
           transition={{ duration: 0.7, ease: EASE }}
           className="flex items-center gap-4 mb-5"
         >
+          <span className="font-mono text-[#222] text-[10px] tracking-[0.3em]">// 06</span>
           <span className="font-mono text-[10px] tracking-[0.35em] text-[#f72585] uppercase">
             Downloads
           </span>

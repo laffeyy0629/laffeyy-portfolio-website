@@ -275,7 +275,7 @@ export default function IntroScreen({ onEnter }) {
               initial={{ opacity: 0, y: 22, scale: 0.88 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.85 }}
-              transition={{ duration: 0.52, ease: EASE }}
+              transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
             >
               {/* Outer decorative corner brackets */}
               <div className="relative inline-block">
@@ -292,7 +292,7 @@ export default function IntroScreen({ onEnter }) {
                     style={{ borderColor: 'rgba(247,37,133,0.35)' }}
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.15 + i * 0.05, duration: 0.3, ease: EASE }}
+                    transition={{ delay: 0.45 + i * 0.05, duration: 0.3, ease: EASE }}
                   />
                 ))}
 
@@ -361,7 +361,7 @@ export default function IntroScreen({ onEnter }) {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
                 className="font-mono text-[8px] tracking-[0.4em] uppercase text-center mt-4"
                 style={{ color: '#1a1a1a' }}
               >

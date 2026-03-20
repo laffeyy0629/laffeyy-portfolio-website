@@ -182,7 +182,7 @@ export default function Projects() {
           className="text-center mb-20"
         >
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="font-mono text-[#222] text-[10px] tracking-[0.3em]">// 03</span>
+            <span className="font-mono text-[#222] text-[10px] tracking-[0.3em]">// 04</span>
             <div className="w-6 h-px bg-white/[0.08]" />
             <span className="text-[#f72585] text-[10px] font-semibold tracking-[0.28em] uppercase">Projects</span>
           </div>

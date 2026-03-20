@@ -36,7 +36,7 @@ export default function Contact() {
         className="absolute -top-4 right-0 select-none pointer-events-none font-black leading-none tracking-[-0.04em] text-white/[0.018]"
         style={{ fontSize: 'clamp(9rem, 24vw, 20rem)' }}
       >
-        06
+        07
       </div>
       {/* Background glow */}
       <div
@@ -56,7 +56,7 @@ export default function Contact() {
           transition={{ duration: 0.85, ease: EASE }}
         >
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="font-mono text-[#222] text-[10px] tracking-[0.3em]">// 05</span>
+            <span className="font-mono text-[#222] text-[10px] tracking-[0.3em]">// 07</span>
             <div className="w-6 h-px bg-white/[0.08]" />
             <span className="text-[#f72585] text-[10px] font-semibold tracking-[0.28em] uppercase">Contact</span>
           </div>

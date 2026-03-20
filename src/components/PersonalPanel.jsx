@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { X, Gamepad2, BookOpen, Tv, Music } from 'lucide-react';
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -463,8 +463,7 @@ function MusicCard({ hobby, index }) {
               width="100%"
               height="152"
               frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              sandbox="allow-scripts allow-same-origin allow-presentation"
+              sandbox="allow-scripts allow-same-origin allow-storage-access-by-user-activation allow-popups"
               loading="lazy"
               title="Spotify — J-Rock Playlist"
             />
@@ -537,6 +536,18 @@ function PhotoGrid() {
 
 export default function PersonalPanel() {
   const [open, setOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const buttonRef = useRef(null);
+
+  // Motion values for smooth cursor tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Spring physics for smooth, natural movement
+  const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+  const rotate = useSpring(0, springConfig);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -551,84 +562,181 @@ export default function PersonalPanel() {
   // Cleanup on unmount
   useEffect(() => () => { document.body.style.overflow = ''; }, []);
 
+  // Mouse tracking for magnetic effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!buttonRef.current || !isHovering) return;
+
+      const rect = buttonRef.current.getBoundingClientRect();
+      const buttonCenterX = rect.left + rect.width / 2;
+      const buttonCenterY = rect.top + rect.height / 2;
+
+      // Calculate distance from cursor to button center
+      const deltaX = e.clientX - buttonCenterX;
+      const deltaY = e.clientY - buttonCenterY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      // Magnetic effect: button follows cursor within hover range
+      const maxDistance = 150; // Magnetic field radius
+      const strength = 0.35; // How much the button moves (0-1)
+
+      if (distance < maxDistance) {
+        mouseX.set(deltaX * strength);
+        mouseY.set(deltaY * strength);
+
+        // Calculate rotation based on cursor angle
+        const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        rotate.set(angle * 0.08); // Subtle rotation
+      } else {
+        mouseX.set(0);
+        mouseY.set(0);
+        rotate.set(0);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [isHovering, mouseX, mouseY, rotate]);
+
+  // Reset position when not hovering
+  useEffect(() => {
+    if (!isHovering) {
+      mouseX.set(0);
+      mouseY.set(0);
+      rotate.set(0);
+    }
+  }, [isHovering, mouseX, mouseY, rotate]);
+
   return (
     <>
-      {/* Floating trigger */}
+      {/* Floating trigger with mouse tracking */}
       <motion.button
+        ref={buttonRef}
         initial={{ opacity: 0, y: 14, scale: 0.88 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 2.6, duration: 0.7, ease: EASE }}
-        whileHover={{ scale: 1.1, y: -3 }}
-        whileTap={{ scale: 0.93 }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        whileHover={{
+          scale: 1.08,
+        }}
+        whileTap={{
+          scale: 0.95,
+        }}
         onClick={() => setOpen(true)}
         data-cursor="OPEN"
-        className="fixed bottom-8 right-8 z-[8900] flex items-center gap-2 px-5 py-2.5 rounded-full backdrop-blur-xl text-white text-sm font-semibold tracking-wide shadow-2xl overflow-hidden"
+        className="fixed bottom-8 right-8 z-[8900] flex items-center gap-2 px-5 py-2.5 rounded-full backdrop-blur-xl text-white text-sm font-semibold tracking-wide shadow-2xl overflow-visible select-none"
         style={{
+          x,
+          y,
+          rotate,
           background: 'linear-gradient(135deg, rgba(247,37,133,0.22) 0%, rgba(180,74,247,0.18) 100%)',
           border: '1px solid rgba(247,37,133,0.45)',
           boxShadow: '0 0 22px rgba(247,37,133,0.25), 0 0 50px rgba(247,37,133,0.08), inset 0 1px 0 rgba(255,255,255,0.07)',
         }}
       >
-        {/* Pulsing beacon ring */}
+        {/* Rotating sparkle */}
         <motion.span
-          className="absolute inset-0 rounded-full pointer-events-none"
           animate={{
-            boxShadow: [
-              '0 0 0 0px rgba(247,37,133,0.5)',
-              '0 0 0 10px rgba(247,37,133,0)',
-            ],
+            rotate: [0, 20, -20, 0],
+            scale: [1, 1.2, 1],
           }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-        />
-        {/* Shimmer sweep */}
-        <motion.span
-          className="absolute inset-y-0 w-1/3 pointer-events-none"
+          transition={{
+            duration: 3.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
           style={{
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent)',
+            display: 'flex',
+            color: '#f72585',
+            textShadow: '0 0 12px #f72585, 0 0 6px #f72585',
+            lineHeight: 1,
+            fontSize: 11,
           }}
-          initial={{ x: '-100%' }}
-          animate={{ x: '400%' }}
-          transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.2, ease: 'linear' }}
-        />
-        <motion.span
-          animate={{ rotate: [0, 15, -15, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ display: 'flex', color: '#f72585', textShadow: '0 0 10px #f72585', lineHeight: 1, fontSize: 11 }}
         >
           ✦
         </motion.span>
+
         <span style={{ textShadow: '0 0 18px rgba(247,37,133,0.55)' }}>Personal</span>
       </motion.button>
 
       <AnimatePresence>
         {open && (
           <>
-            {/* Dim backdrop */}
+            {/* Dim backdrop with blur effect */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
+              initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+              exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              transition={{ duration: 0.4, ease: EASE }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-[9000] bg-black/70 backdrop-blur-sm"
+              className="fixed inset-0 z-[9000] bg-black/70"
             />
 
-            {/* Panel slides up — centered, capped width */}
+            {/* Panel slides up with enhanced animations */}
             <motion.div
-              initial={{ y: '100%', scale: 0.97, borderRadius: '36px 36px 0 0' }}
-              animate={{ y: 0, scale: 1, borderRadius: '28px 28px 0 0' }}
-              exit={{ y: '100%', scale: 0.98, transition: { duration: 0.45, ease: [0.4, 0, 1, 1] } }}
-              transition={{ type: 'spring', stiffness: 310, damping: 34, mass: 1 }}
+              initial={{
+                y: '100%',
+                scale: 0.95,
+                borderRadius: '40px 40px 0 0',
+                opacity: 0,
+              }}
+              animate={{
+                y: 0,
+                scale: 1,
+                borderRadius: '28px 28px 0 0',
+                opacity: 1,
+              }}
+              exit={{
+                y: '100%',
+                scale: 0.96,
+                opacity: 0,
+                transition: { duration: 0.45, ease: [0.4, 0, 1, 1] },
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 280,
+                damping: 30,
+                mass: 0.8,
+              }}
               className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[9100] h-[92dvh] bg-[#090909] border-t border-x border-white/[0.06] flex flex-col overflow-hidden"
-              style={{ width: 'min(calc(100vw - 2rem), 860px)' }}
+              style={{
+                width: 'min(calc(100vw - 2rem), 860px)',
+                boxShadow: '0 -10px 80px rgba(247,37,133,0.15), 0 -4px 40px rgba(0,0,0,0.8)',
+              }}
             >
-              {/* Drag notch */}
-              <div className="shrink-0 flex justify-center pt-4 pb-2">
-                <div className="w-10 h-[3px] rounded-full bg-white/[0.1]" />
-              </div>
+              {/* Animated gradient top border */}
+              <motion.div
+                className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(247,37,133,0.8), rgba(180,74,247,0.8), transparent)',
+                }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+              />
+
+              {/* Drag notch with animation */}
+              <motion.div
+                className="shrink-0 flex justify-center pt-4 pb-2"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: EASE }}
+              >
+                <motion.div
+                  className="w-10 h-[3px] rounded-full bg-white/[0.15]"
+                  whileHover={{ width: 50, backgroundColor: 'rgba(247,37,133,0.4)' }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
 
               {/* Panel header */}
-              <div className="shrink-0 px-8 py-4 flex items-center justify-between border-b border-white/[0.05]">
+              <motion.div
+                className="shrink-0 px-8 py-4 flex items-center justify-between border-b border-white/[0.05]"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6, ease: EASE }}
+              >
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-[#1e1e1e] text-[10px] tracking-[0.32em] uppercase">
                     // Personal
@@ -639,19 +747,32 @@ export default function PersonalPanel() {
                   </span>
                 </div>
                 <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.93 }}
-                  transition={{ duration: 0.2 }}
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: 90,
+                    backgroundColor: 'rgba(247,37,133,0.1)',
+                    borderColor: 'rgba(247,37,133,0.3)',
+                  }}
+                  whileTap={{
+                    scale: 0.9,
+                    rotate: 180,
+                  }}
+                  transition={{ duration: 0.3, ease: EASE }}
                   onClick={() => setOpen(false)}
                   data-cursor="CLOSE"
-                  className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.09] flex items-center justify-center text-[#555] hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.09] flex items-center justify-center text-[#555] hover:text-[#f72585] transition-colors"
                 >
                   <X size={14} />
                 </motion.button>
-              </div>
+              </motion.div>
 
               {/* Scrollable body */}
-              <div className="flex-1 overflow-y-auto px-8 py-12">
+              <motion.div
+                className="flex-1 overflow-y-auto px-8 py-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.6, ease: EASE }}
+              >
                 <div className="max-w-4xl mx-auto space-y-24">
 
                   {/* Hero text */}
@@ -731,7 +852,7 @@ export default function PersonalPanel() {
                   {/* Bottom breathing room */}
                   <div className="h-8" />
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}
