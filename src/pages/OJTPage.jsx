@@ -21,7 +21,7 @@ const OJT_ACTIVITIES = [
   {
     id: 1,
     title: 'Work Accomplishment Report Video - Weeks 1-4',
-    description: 'Overview of modern web technologies and frameworks',
+    description: 'A comprehensive video report detailing the tasks accomplished, challenges faced, and lessons learned during the first four weeks of the OJT.',
     type: 'video',
     videoId: 'DuCRMkw5Rik', // Replace with actual YouTube video ID
     date: '2026-03-21',
