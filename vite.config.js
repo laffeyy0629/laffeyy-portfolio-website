@@ -6,10 +6,10 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.VITE_BASE_PATH || '/laffeyy-portfolio-website',
+  base: process.env.VITE_BASE_PATH || '/laffeyy-portfolio-website', // Comment this line during local
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './src'), // Comment this whole block during local
     },
   },
 })
