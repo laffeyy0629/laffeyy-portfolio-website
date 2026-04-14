@@ -1,25 +1,48 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Menu, X, FolderOpen } from 'lucide-react';
+import { Menu, X, FolderOpen, User, Zap, Briefcase, Clock, Download, Mail } from 'lucide-react';
 
 const NAV_LINKS = [
-  { label: 'About',      href: '#about' },
-  { label: 'Skills',     href: '#skills' },
-  { label: 'Projects',   href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Downloads',  href: '#downloads' },
-  { label: 'Contact',    href: '#contact' },
+  { label: 'About',      href: '#about',      icon: User },
+  { label: 'Skills',     href: '#skills',     icon: Zap },
+  { label: 'Projects',   href: '#projects',   icon: Briefcase },
+  { label: 'Experience', href: '#experience', icon: Clock },
+  { label: 'Downloads',  href: '#downloads',  icon: Download },
+  { label: 'Contact',    href: '#contact',    icon: Mail },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('about');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['about', 'skills', 'projects', 'experience', 'downloads', 'contact'];
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -37,7 +60,7 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 select-none">
           <img
-            src="/logo.svg"
+            src="/carlogo.jpg"
             alt="Logo"
             width={28}
             height={28}
@@ -45,21 +68,28 @@ export default function Navbar() {
             onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
           <span className="text-white font-semibold text-lg tracking-tight">
-            YourName<span className="text-[#f72585]">.</span>
+            IsaqF<span className="text-[#f72585]">.</span>
           </span>
         </a>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
-              className="text-sm text-[#86868b] hover:text-white transition-colors duration-200 font-medium"
-            >
-              {label}
-            </a>
-          ))}
+          {NAV_LINKS.map(({ label, href, icon: Icon }) => {
+            const sectionId = href.replace('#', '');
+            const isActive = activeSection === sectionId;
+            return (
+              <a
+                key={href}
+                href={href}
+                className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
+                  isActive ? 'text-[#f72585]' : 'text-[#86868b] hover:text-white'
+                }`}
+              >
+                <Icon size={13} />
+                {label}
+              </a>
+            );
+          })}
         </div>
 
         {/* Desktop CTAs */}
@@ -113,19 +143,26 @@ export default function Navbar() {
             className="md:hidden bg-black/90 backdrop-blur-2xl border-b border-white/[0.06] overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-1">
-              {NAV_LINKS.map(({ label, href }, i) => (
-                <motion.a
-                  key={href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                  href={href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-[#86868b] hover:text-white transition-colors py-3 text-lg font-medium border-b border-white/[0.05]"
-                >
-                  {label}
-                </motion.a>
-              ))}
+              {NAV_LINKS.map(({ label, href, icon: Icon }, i) => {
+                const sectionId = href.replace('#', '');
+                const isActive = activeSection === sectionId;
+                return (
+                  <motion.a
+                    key={href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    href={href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex items-center gap-2 transition-colors py-3 text-lg font-medium border-b border-white/[0.05] ${
+                      isActive ? 'text-[#f72585]' : 'text-[#86868b] hover:text-white'
+                    }`}
+                  >
+                    <Icon size={16} />
+                    {label}
+                  </motion.a>
+                );
+              })}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}

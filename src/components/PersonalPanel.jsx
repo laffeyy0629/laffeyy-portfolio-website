@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { X, Gamepad2, BookOpen, Tv, Music } from 'lucide-react';
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -15,10 +15,10 @@ const hobbies = [
     desc: 'From open-world RPGs to precision indie platformers — gaming is how I experience stories and worlds that only exist in code.',
     coverAspect: 'aspect-[2/3]',
     items: [
-      { title: 'Elden Ring',         sub: 'Action RPG · FromSoftware',      img: 'https://picsum.photos/seed/gm_er/200/300' },
-      { title: 'Hollow Knight',      sub: 'Metroidvania · Team Cherry',     img: 'https://picsum.photos/seed/gm_hk/200/300' },
-      { title: "Baldur's Gate 3",    sub: 'RPG · Larian Studios',           img: 'https://picsum.photos/seed/gm_bg/200/300' },
-      { title: 'Celeste',            sub: 'Platformer · Maddy Makes Games', img: 'https://picsum.photos/seed/gm_cl/200/300' },
+      { title: 'Bloodborne',         sub: 'Action RPG · FromSoftware',      img: 'https://assets1.ignimgs.com/2019/01/05/bloodborne---button-1546669457774.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80' },
+      { title: 'Persona 5',      sub: 'JRPG · Atlus',     img: 'https://sm.ign.com/ign_pk/cover/p/persona-5-/persona-5-the-royal_rw71.jpg' },
+      { title: "Ace Combat 0",    sub: 'Flight Sim · PROJECT ACES',           img: 'https://m.media-amazon.com/images/M/MV5BYWE1OGQyY2UtNDQ0Ny00MmIwLTlmODUtZjZhYWY1YzRiMjM0XkEyXkFqcGc@._V1_.jpg' },
+      { title: 'Cyberpunk 2077',            sub: 'RPG · CD Projekt RED', img: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Cyberpunk_2077_box_art.jpg/250px-Cyberpunk_2077_box_art.jpg' },
     ],
   },
   {
@@ -28,13 +28,13 @@ const hobbies = [
     color: '#a15aff',
     bg: '#a15aff0d',
     border: '#a15aff22',
-    desc: 'Sci-fi, philosophy, and software craft. Books are how I think slowly and deeply about hard problems.',
+    desc: 'Manga and Light Novels that shaped my perspective.',
     coverAspect: 'aspect-[2/3]',
     items: [
-      { title: 'Dune',                    sub: 'Sci-Fi · Frank Herbert',    img: 'https://picsum.photos/seed/bk_du/200/300' },
-      { title: 'Meditations',             sub: 'Philosophy · M. Aurelius', img: 'https://picsum.photos/seed/bk_me/200/300' },
-      { title: 'Pragmatic Programmer',    sub: 'Dev Craft · Hunt & Thomas', img: 'https://picsum.photos/seed/bk_pp/200/300' },
-      { title: 'Sapiens',                 sub: 'History · Harari',          img: 'https://picsum.photos/seed/bk_sa/200/300' },
+      { title: 'Berserk',                    sub: 'Manga · Kentaro Miura',    img: 'https://static.wikia.nocookie.net/enmanga/images/6/64/Berserk_Vol_1.jpg/revision/latest/scale-to-width-down/1200?cb=20210928030221' },
+      { title: 'Wistoria',             sub: 'Manga/LN · Makoto Yukimura', img: 'https://bukkuzon.com/cdn/shop/products/9781646519194_wistoria-wand-and-sword-manga-volume-7_1.jpg?v=1738138562' },
+      { title: 'Re:Zero',    sub: 'Light Novel · Nagatsuki Tappei', img: 'https://static.wikia.nocookie.net/rezero/images/e/eb/Re_Zero_Volume_1_Cover.png/revision/latest?cb=20211219142902' },
+      { title: 'Oregairu',                 sub: 'Manga · Watari Wataru',          img: 'https://static.wikia.nocookie.net/yahari/images/e/e0/Cover_Volume_1_HQ.png/revision/latest?cb=20180729200357' },
     ],
   },
   {
@@ -44,13 +44,13 @@ const hobbies = [
     color: '#ff375f',
     bg: '#ff375f0d',
     border: '#ff375f22',
-    desc: 'Anime, thoughtful cinema, and nature documentaries. A great story well told — whatever the medium.',
+    desc: 'Anime, and cinema. A great story well told — whatever the medium.',
     coverAspect: 'aspect-[2/3]',
     items: [
-      { title: 'Steins;Gate',      sub: 'Anime · White Fox',    img: 'https://picsum.photos/seed/tv_sg/200/300' },
-      { title: 'Spirited Away',    sub: 'Film · Studio Ghibli', img: 'https://picsum.photos/seed/tv_sa/200/300' },
-      { title: 'Inception',        sub: 'Film · Nolan',         img: 'https://picsum.photos/seed/tv_in/200/300' },
-      { title: 'Planet Earth II',  sub: 'Doc · BBC',            img: 'https://picsum.photos/seed/tv_pe/200/300' },
+      { title: 'Steins;Gate',      sub: 'Anime · White Fox',    img: 'https://m.media-amazon.com/images/M/MV5BZjI1YjZiMDUtZTI3MC00YTA5LWIzMmMtZmQ0NTZiYWM4NTYwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
+      { title: 'Angel Beats',    sub: 'Anime · Key', img: 'https://upload.wikimedia.org/wikipedia/en/a/a5/Angel_Beats%21_DVD_Complete_Collection_cover.jpg' },
+      { title: 'Iron Man',        sub: 'Film · Marvel',         img: 'https://upload.wikimedia.org/wikipedia/en/0/02/Iron_Man_%282008_film%29_poster.jpg' },
+      { title: 'Look Back',  sub: 'Film - Tatsuki Fujimoto',            img: 'https://m.media-amazon.com/images/M/MV5BOTVhN2ZlNmUtZTY1Mi00OTUwLWIxNzEtYzgwZjg2ZTlhNWU1XkEyXkFqcGc@._V1_QL75_UX174_.jpg' },
     ],
   },
   {
@@ -63,26 +63,26 @@ const hobbies = [
     desc: 'J-Rock that hits different — ONE OK ROCK\'s anthems, Zutomayo\'s chaotic genius, Yorushika\'s bittersweet poetry.',
     coverAspect: 'aspect-square',
     // ↓ Replace with your own Spotify playlist / artist / album embed URL
-    spotifyUrl: 'https://open.spotify.com/embed/playlist/37i9dQZF1DX8Uebhn9wzrS?utm_source=generator&theme=0',
+    spotifyUrl: 'https://open.spotify.com/embed/album/3kbT2L3KUCnl547a6zZKKE',
     items: [
-      { title: 'ONE OK ROCK', sub: 'J-Rock / Alternative', img: 'https://picsum.photos/seed/mu_oor/200/200' },
-      { title: 'Zutomayo',    sub: 'J-Pop / Indie',        img: 'https://picsum.photos/seed/mu_ztm/200/200' },
-      { title: 'Yorushika',   sub: 'J-Rock / Indie Pop',   img: 'https://picsum.photos/seed/mu_yrs/200/200' },
+      { title: 'ONE OK ROCK', sub: 'J-Rock / Alternative', img: 'https://i.scdn.co/image/ab6761610000e5eb65f3ecf43652596ef75f3293' },
+      { title: 'Zutomayo',    sub: 'J-Pop / Indie',        img: 'https://cdn-images.dzcdn.net/images/artist/61bcbf8296b1669499064406c534d39d/500x500.jpg' },
+      { title: 'Yorushika',   sub: 'J-Rock / Indie Pop',   img: 'https://upload.wikimedia.org/wikipedia/commons/2/27/Yorushika_Logo.jpg' },
     ],
   },
 ];
 
-// Replace src/title/subtitle values with your real photography
+// Place your photos in public/photos/ and update the list below.
+// e.g. public/photos/photo1.jpg → src: '/photos/photo1.jpg'
 const photos = [
-  { id: 1, src: 'https://picsum.photos/seed/pf1/700/1000', title: 'Golden Hour', sub: 'Tokyo, 2024' },
-  { id: 2, src: 'https://picsum.photos/seed/pf2/700/500',  title: 'Urban Geometry', sub: 'Shinjuku Station' },
-  { id: 3, src: 'https://picsum.photos/seed/pf3/700/600',  title: 'Still Life', sub: 'f/1.8 · ISO 200' },
-  { id: 4, src: 'https://picsum.photos/seed/pf4/700/480',  title: 'Neon & Rain', sub: 'Shibuya, 2025' },
-  { id: 5, src: 'https://picsum.photos/seed/pf5/700/900',  title: 'Solitude', sub: 'Kyoto Gardens' },
-  { id: 6, src: 'https://picsum.photos/seed/pf6/700/520',  title: 'Concrete Layers', sub: 'Architecture series' },
-  { id: 7, src: 'https://picsum.photos/seed/pf7/700/460',  title: 'Motion Blur', sub: '1/15s · f/8' },
-  { id: 8, src: 'https://picsum.photos/seed/pf8/700/700',  title: 'Symmetry', sub: 'Osaka, 2025' },
-  { id: 9, src: 'https://picsum.photos/seed/pf9/700/550',  title: 'Twilight', sub: 'Blue hour series' },
+  { id: 1, src: '/personalPhotos/photo2.png', title: 'Golden Hour',     sub: 'Tokyo, Ameyoko, 2024' },
+  { id: 2, src: '/personalPhotos/photo3.png', title: 'Tokyo Horizons',  sub: 'Tokyo, 2024' },
+  { id: 3, src: '/personalPhotos/photo1.png', title: 'Green in the City',      sub: 'Tokyo, Koyamadai, 2024' },
+  { id: 4, src: '/personalPhotos/photo4.png', title: 'Fast Life',     sub: 'Sapporo, 2024' },
+  { id: 5, src: '/personalPhotos/photo5.png', title: 'Warmth in the Winter',        sub: 'Sapporo, 2024' },
+  { id: 6, src: '/personalPhotos/photo6.png', title: 'City within A City', sub: 'Yokohama, Ramen Museum, 2024' },
+  { id: 7, src: '/personalPhotos/photo7.png', title: 'Light in the Snow',     sub: 'Hokkaido, 2024' },
+  { id: 8, src: '/personalPhotos/photo8.png', title: 'Finding your embrace',        sub: 'Sapporo, 2024' },
 ];
 
 // ── Arcade / Gaming Card ─────────────────────────────────────────────────────
@@ -132,7 +132,7 @@ function GamingCard({ hobby, index }) {
             {title}_
           </h3>
         </div>
-        <p className="text-[#2e3a3a] text-[12px] leading-relaxed font-mono">{desc}</p>
+        <p className="text-[#4a8080] text-[12px] leading-relaxed font-mono">{desc}</p>
       </div>
       {/* Thumbnail strip with per-image scanline */}
       <div className="px-4 pb-4 relative z-20">
@@ -228,7 +228,7 @@ function ReadingCard({ hobby, index }) {
           </div>
           <h3 className="text-white font-bold text-sm tracking-tight">{title}</h3>
         </div>
-        <p className="text-[#303030] text-[12px] leading-relaxed">{desc}</p>
+        <p className="text-[#888] text-[12px] leading-relaxed">{desc}</p>
       </div>
       {/* Manga panel 2×2 grid */}
       <div className="px-4 pb-5 relative z-10">
@@ -327,7 +327,7 @@ function WatchingCard({ hobby, index }) {
           </div>
           <h3 className="text-white font-semibold text-sm tracking-tight">{title}</h3>
         </div>
-        <p className="text-[#2a2535] text-[12px] leading-relaxed">{desc}</p>
+        <p className="text-[#8a7aaa] text-[12px] leading-relaxed">{desc}</p>
       </div>
       {/* Thumbnail strip with character color bars */}
       <div className="px-4 pb-5 relative z-10">
@@ -416,7 +416,7 @@ function MusicCard({ hobby, index }) {
           </div>
           <h3 className="text-white font-semibold text-sm tracking-tight">{title}</h3>
         </div>
-        <p className="text-[#2e1a1a] text-[12px] leading-relaxed">{desc}</p>
+        <p className="text-[#8a5a5a] text-[12px] leading-relaxed">{desc}</p>
       </div>
       {/* Artist strip */}
       <div className="px-4 pb-4">
@@ -463,7 +463,7 @@ function MusicCard({ hobby, index }) {
               width="100%"
               height="152"
               frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              sandbox="allow-scripts allow-same-origin allow-storage-access-by-user-activation allow-popups"
               loading="lazy"
               title="Spotify — J-Rock Playlist"
             />
@@ -505,6 +505,12 @@ function PhotoGrid() {
             alt={photo.title}
             className="w-full h-auto object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-out"
             loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement.style.background =
+                'linear-gradient(135deg, #0d0d0d 0%, #1a0a14 100%)';
+              e.currentTarget.parentElement.style.minHeight = '160px';
+            }}
           />
 
           {/* Gradient + text overlay */}
@@ -530,6 +536,18 @@ function PhotoGrid() {
 
 export default function PersonalPanel() {
   const [open, setOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const buttonRef = useRef(null);
+
+  // Motion values for smooth cursor tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Spring physics for smooth, natural movement
+  const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+  const rotate = useSpring(0, springConfig);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -544,84 +562,181 @@ export default function PersonalPanel() {
   // Cleanup on unmount
   useEffect(() => () => { document.body.style.overflow = ''; }, []);
 
+  // Mouse tracking for magnetic effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!buttonRef.current || !isHovering) return;
+
+      const rect = buttonRef.current.getBoundingClientRect();
+      const buttonCenterX = rect.left + rect.width / 2;
+      const buttonCenterY = rect.top + rect.height / 2;
+
+      // Calculate distance from cursor to button center
+      const deltaX = e.clientX - buttonCenterX;
+      const deltaY = e.clientY - buttonCenterY;
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      // Magnetic effect: button follows cursor within hover range
+      const maxDistance = 150; // Magnetic field radius
+      const strength = 0.35; // How much the button moves (0-1)
+
+      if (distance < maxDistance) {
+        mouseX.set(deltaX * strength);
+        mouseY.set(deltaY * strength);
+
+        // Calculate rotation based on cursor angle
+        const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        rotate.set(angle * 0.08); // Subtle rotation
+      } else {
+        mouseX.set(0);
+        mouseY.set(0);
+        rotate.set(0);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [isHovering, mouseX, mouseY, rotate]);
+
+  // Reset position when not hovering
+  useEffect(() => {
+    if (!isHovering) {
+      mouseX.set(0);
+      mouseY.set(0);
+      rotate.set(0);
+    }
+  }, [isHovering, mouseX, mouseY, rotate]);
+
   return (
     <>
-      {/* Floating trigger */}
+      {/* Floating trigger with mouse tracking */}
       <motion.button
+        ref={buttonRef}
         initial={{ opacity: 0, y: 14, scale: 0.88 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 2.6, duration: 0.7, ease: EASE }}
-        whileHover={{ scale: 1.1, y: -3 }}
-        whileTap={{ scale: 0.93 }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        whileHover={{
+          scale: 1.08,
+        }}
+        whileTap={{
+          scale: 0.95,
+        }}
         onClick={() => setOpen(true)}
         data-cursor="OPEN"
-        className="fixed bottom-8 right-8 z-[8900] flex items-center gap-2 px-5 py-2.5 rounded-full backdrop-blur-xl text-white text-sm font-semibold tracking-wide shadow-2xl overflow-hidden"
+        className="fixed bottom-8 right-8 z-[8900] flex items-center gap-2 px-5 py-2.5 rounded-full backdrop-blur-xl text-white text-sm font-semibold tracking-wide shadow-2xl overflow-visible select-none"
         style={{
+          x,
+          y,
+          rotate,
           background: 'linear-gradient(135deg, rgba(247,37,133,0.22) 0%, rgba(180,74,247,0.18) 100%)',
           border: '1px solid rgba(247,37,133,0.45)',
           boxShadow: '0 0 22px rgba(247,37,133,0.25), 0 0 50px rgba(247,37,133,0.08), inset 0 1px 0 rgba(255,255,255,0.07)',
         }}
       >
-        {/* Pulsing beacon ring */}
+        {/* Rotating sparkle */}
         <motion.span
-          className="absolute inset-0 rounded-full pointer-events-none"
           animate={{
-            boxShadow: [
-              '0 0 0 0px rgba(247,37,133,0.5)',
-              '0 0 0 10px rgba(247,37,133,0)',
-            ],
+            rotate: [0, 20, -20, 0],
+            scale: [1, 1.2, 1],
           }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-        />
-        {/* Shimmer sweep */}
-        <motion.span
-          className="absolute inset-y-0 w-1/3 pointer-events-none"
+          transition={{
+            duration: 3.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
           style={{
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent)',
+            display: 'flex',
+            color: '#f72585',
+            textShadow: '0 0 12px #f72585, 0 0 6px #f72585',
+            lineHeight: 1,
+            fontSize: 11,
           }}
-          initial={{ x: '-100%' }}
-          animate={{ x: '400%' }}
-          transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.2, ease: 'linear' }}
-        />
-        <motion.span
-          animate={{ rotate: [0, 15, -15, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ display: 'flex', color: '#f72585', textShadow: '0 0 10px #f72585', lineHeight: 1, fontSize: 11 }}
         >
           ✦
         </motion.span>
+
         <span style={{ textShadow: '0 0 18px rgba(247,37,133,0.55)' }}>Personal</span>
       </motion.button>
 
       <AnimatePresence>
         {open && (
           <>
-            {/* Dim backdrop */}
+            {/* Dim backdrop with blur effect */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
+              initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              animate={{ opacity: 1, backdropFilter: 'blur(8px)' }}
+              exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+              transition={{ duration: 0.4, ease: EASE }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-[9000] bg-black/70 backdrop-blur-sm"
+              className="fixed inset-0 z-[9000] bg-black/70"
             />
 
-            {/* Panel slides up — centered, capped width */}
+            {/* Panel slides up with enhanced animations */}
             <motion.div
-              initial={{ y: '100%', scale: 0.97, borderRadius: '36px 36px 0 0' }}
-              animate={{ y: 0, scale: 1, borderRadius: '28px 28px 0 0' }}
-              exit={{ y: '100%', scale: 0.98, transition: { duration: 0.45, ease: [0.4, 0, 1, 1] } }}
-              transition={{ type: 'spring', stiffness: 310, damping: 34, mass: 1 }}
+              initial={{
+                y: '100%',
+                scale: 0.95,
+                borderRadius: '40px 40px 0 0',
+                opacity: 0,
+              }}
+              animate={{
+                y: 0,
+                scale: 1,
+                borderRadius: '28px 28px 0 0',
+                opacity: 1,
+              }}
+              exit={{
+                y: '100%',
+                scale: 0.96,
+                opacity: 0,
+                transition: { duration: 0.45, ease: [0.4, 0, 1, 1] },
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 280,
+                damping: 30,
+                mass: 0.8,
+              }}
               className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[9100] h-[92dvh] bg-[#090909] border-t border-x border-white/[0.06] flex flex-col overflow-hidden"
-              style={{ width: 'min(calc(100vw - 2rem), 860px)' }}
+              style={{
+                width: 'min(calc(100vw - 2rem), 860px)',
+                boxShadow: '0 -10px 80px rgba(247,37,133,0.15), 0 -4px 40px rgba(0,0,0,0.8)',
+              }}
             >
-              {/* Drag notch */}
-              <div className="shrink-0 flex justify-center pt-4 pb-2">
-                <div className="w-10 h-[3px] rounded-full bg-white/[0.1]" />
-              </div>
+              {/* Animated gradient top border */}
+              <motion.div
+                className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(247,37,133,0.8), rgba(180,74,247,0.8), transparent)',
+                }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+              />
+
+              {/* Drag notch with animation */}
+              <motion.div
+                className="shrink-0 flex justify-center pt-4 pb-2"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: EASE }}
+              >
+                <motion.div
+                  className="w-10 h-[3px] rounded-full bg-white/[0.15]"
+                  whileHover={{ width: 50, backgroundColor: 'rgba(247,37,133,0.4)' }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
 
               {/* Panel header */}
-              <div className="shrink-0 px-8 py-4 flex items-center justify-between border-b border-white/[0.05]">
+              <motion.div
+                className="shrink-0 px-8 py-4 flex items-center justify-between border-b border-white/[0.05]"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6, ease: EASE }}
+              >
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-[#1e1e1e] text-[10px] tracking-[0.32em] uppercase">
                     // Personal
@@ -632,19 +747,32 @@ export default function PersonalPanel() {
                   </span>
                 </div>
                 <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.93 }}
-                  transition={{ duration: 0.2 }}
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: 90,
+                    backgroundColor: 'rgba(247,37,133,0.1)',
+                    borderColor: 'rgba(247,37,133,0.3)',
+                  }}
+                  whileTap={{
+                    scale: 0.9,
+                    rotate: 180,
+                  }}
+                  transition={{ duration: 0.3, ease: EASE }}
                   onClick={() => setOpen(false)}
                   data-cursor="CLOSE"
-                  className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.09] flex items-center justify-center text-[#555] hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.09] flex items-center justify-center text-[#555] hover:text-[#f72585] transition-colors"
                 >
                   <X size={14} />
                 </motion.button>
-              </div>
+              </motion.div>
 
               {/* Scrollable body */}
-              <div className="flex-1 overflow-y-auto px-8 py-12">
+              <motion.div
+                className="flex-1 overflow-y-auto px-8 py-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.6, ease: EASE }}
+              >
                 <div className="max-w-4xl mx-auto space-y-24">
 
                   {/* Hero text */}
@@ -667,7 +795,7 @@ export default function PersonalPanel() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5, duration: 0.7 }}
-                      className="text-[#383838] text-lg leading-relaxed max-w-lg mt-5"
+                      className="text-[#777] text-lg leading-relaxed max-w-lg mt-5"
                     >
                       A developer is shaped by everything they read, watch, play, and see.
                       Here's a glimpse into what makes me, me.
@@ -713,7 +841,7 @@ export default function PersonalPanel() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4, duration: 0.6, ease: EASE }}
-                      className="text-[#383838] text-sm leading-relaxed mb-10 max-w-md"
+                      className="text-[#777] text-sm leading-relaxed mb-10 max-w-md"
                     >
                       I shoot mostly street and urban architecture — there's something about
                       capturing a fleeting city moment that feels like writing with light.
@@ -724,7 +852,7 @@ export default function PersonalPanel() {
                   {/* Bottom breathing room */}
                   <div className="h-8" />
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}

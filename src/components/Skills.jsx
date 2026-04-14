@@ -239,7 +239,7 @@ export default function Skills() {
           <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold text-white tracking-tight">
             What I work with.
           </h2>
-          <p className="mt-5 text-[#555] text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="mt-5 text-[#777] text-lg max-w-xl mx-auto leading-relaxed">
             A curated toolkit of modern technologies I use to build scalable,
             beautiful products from idea to production.
           </p>

@@ -64,8 +64,8 @@ export default function Hero() {
   const imgY    = useTransform(scrollYProgress, [0, 1],    ['0%',   '15%']);
 
   // Scramble "Your" and "Name." — triggers after clip-reveal (~0.8s)
-  const scrambleYour = useScramble('Your', { delay: 0.9, duration: 1.0 });
-  const scrambleName = useScramble('Name.', { delay: 1.1, duration: 1.0 });
+  const scrambleYour = useScramble('Javez Isaq', { delay: 0.9, duration: 1.0 });
+  const scrambleName = useScramble('Ferrer', { delay: 1.1, duration: 1.0 });
 
   // Magnetic CTAs
   const magProjects = useMagnetic(0.38);
@@ -149,7 +149,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.85, ease: EASE }}
-            className="text-[clamp(0.9rem,2vw,1.15rem)] text-[#454545] mb-10 max-w-md mx-auto lg:mx-0 leading-relaxed font-light tracking-wide"
+            className="text-[clamp(0.9rem,2vw,1.15rem)] text-[#8a8a8a] mb-10 max-w-md mx-auto lg:mx-0 leading-relaxed font-light tracking-wide"
           >
             Crafting beautiful, performant, and intuitive digital experiences.
           </motion.p>

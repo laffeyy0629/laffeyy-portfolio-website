@@ -8,11 +8,11 @@ export default function Footer() {
           href="#"
           className="text-white font-semibold tracking-tight text-base"
         >
-          YourName<span className="text-[#f72585]">.</span>
+          IsaqF<span className="text-[#f72585]">.</span>
         </a>
 
-        <p className="text-[#3a3a3a]">
-          © {year} YourName. Crafted with React &amp; Tailwind CSS.
+        <p className="text-[#666]">
+          © {year} Isaq Ferrer. Crafted with React &amp; Tailwind CSS.
         </p>
 
         <div className="flex items-center gap-6">
@@ -20,7 +20,7 @@ export default function Footer() {
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="text-[#3a3a3a] hover:text-white transition-colors duration-200"
+              className="text-[#666] hover:text-white transition-colors duration-200"
             >
               {item}
             </a>

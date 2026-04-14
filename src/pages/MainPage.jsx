@@ -11,6 +11,7 @@ import About from '../components/About';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
 import Experience from '../components/Experience';
+import Languages from '../components/Languages';
 import Downloads from '../components/Downloads';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -27,12 +28,12 @@ export default function MainPage() {
   const [showIntro, setShowIntro] = useState(!_introPlayed);
 
   useEffect(() => {
-    document.title = 'Your Name — Portfolio';
+    document.title = "Isaq Ferrer's Cool Portfolio Website";
   }, []);
 
   return (
     <motion.div
-      className="bg-black min-h-screen"
+      className="bg-black min-h-screen relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       // Delay matches wipe-out timing (~0.43s) so content appears as the bar exits
@@ -47,11 +48,14 @@ export default function MainPage() {
       <Marquee />
       <About />
       <Skills />
+      <Languages />
       <Marquee reverse dim />
       <Projects />
       <Experience />
+      <Marquee />
       <Downloads />
       <Contact />
+      <Marquee reverse dim />
       <Footer />
 
       <KonamiEasterEgg />
