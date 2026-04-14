@@ -9,7 +9,7 @@ export default defineConfig({
   base: process.env.VITE_BASE_PATH || '/laffeyy-portfolio-website', // Comment this line during local
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'), // Comment this whole block during local
+      '@': path.resolve(__dirname, './src'), // Comment this line during local
     },
   },
 })
