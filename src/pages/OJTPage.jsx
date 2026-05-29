@@ -48,6 +48,16 @@ const OJT_ACTIVITIES = [
     tags: ['Lesson 3', 'Company Overview'],
     category: 'written_activity',
   },
+  {
+    id: 4,
+    title: 'OJT Presentation',
+    description: 'A video presentation summarizing the key learnings, experiences, and outcomes of the OJT program.',
+    type: 'video',
+    videoId: 'eGYQf1bTHFI ', // Replace with actual YouTube video ID
+    date: '2026-05-29',
+    tags: ['OJT Presentation'],
+    category: 'documentation', // coding, design, documentation, presentation, research
+  },
   // Add more activities as needed
 ];
 
@@ -1002,7 +1012,7 @@ function SectionBridge() {
 //  e.g. for https://youtu.be/dQw4w9WgXcQ the ID is dQw4w9WgXcQ
 //  YouTube IDs are exactly 11 characters: letters, digits, _ or -
 // ─────────────────────────────────────────────────────────
-const YOUTUBE_VIDEO_ID = 'YOUR_VIDEO_ID_HERE';
+const YOUTUBE_VIDEO_ID = 'v3_8lYORKvI';
 
 // Whitelist: YouTube IDs are always exactly 11 URL-safe chars.
 // Reject anything that doesn't match before putting it in a src URL.
