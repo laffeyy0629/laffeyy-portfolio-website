@@ -122,17 +122,31 @@ const REPORTS = [
 ];
 
 // ─── Thread connections (index pairs) ────────────────────────────────────────
-const CONNECTIONS = [[0, 1], [1, 2], [0, 3], [1, 3], [1, 4], [2, 4], [2, 5], [3, 4], [4, 5]];
+const CONNECTIONS = [
+  [0, 1], [1, 2], [0, 3], [1, 3], [1, 4], [2, 4], [2, 5], [3, 4], [4, 5],
+  [3, 6], [4, 6], [4, 7], [5, 7], [5, 8], [6, 7], [7, 8],
+  [6, 9], [7, 9], [7, 10], [8, 10], [8, 11], [9, 10], [10, 11],
+  [9, 12], [10, 12], [10, 13], [11, 13], [11, 14], [12, 13], [13, 14]
+];
 
 // ─── Constellation initial layout [x%, y%] of container ─────────────────────
 // Adjust these to reposition nodes. Values are fractions (0–1) of the scene area.
 const LAYOUT = [
-  [0.05, 0.07],  // Node 0 – top-left
-  [0.34, 0.04],  // Node 1 – top-center
-  [0.63, 0.09],  // Node 2 – top-right
-  [0.10, 0.60],  // Node 3 – bottom-left
-  [0.40, 0.63],  // Node 4 – bottom-center
-  [0.68, 0.56],  // Node 5 – bottom-right
+  [0.05, 0.02],  // Node 0
+  [0.34, 0.01],  // Node 1
+  [0.63, 0.03],  // Node 2
+  [0.10, 0.20],  // Node 3
+  [0.40, 0.22],  // Node 4
+  [0.68, 0.18],  // Node 5
+  [0.08, 0.40],  // Node 6
+  [0.35, 0.42],  // Node 7
+  [0.65, 0.38],  // Node 8
+  [0.04, 0.60],  // Node 9
+  [0.38, 0.64],  // Node 10
+  [0.62, 0.59],  // Node 11
+  [0.09, 0.82],  // Node 12
+  [0.36, 0.85],  // Node 13
+  [0.67, 0.80],  // Node 14
 ];
 
 // ─── Starfield (deterministic positions) ─────────────────────────────────────
@@ -418,12 +432,12 @@ export default function WeeklyReports() {
   const didDragRef = useRef(false);
   const rafRef = useRef(null);
   const tRef = useRef(0);
-  const cSizeRef = useRef({ w: 700, h: 560 });
+  const cSizeRef = useRef({ w: 700, h: 1200 });
 
   const [positions, setPositions] = useState(() =>
-    LAYOUT.map(([fx, fy]) => ({ x: fx * (700 - NODE_W), y: fy * (560 - NODE_H) }))
+    LAYOUT.map(([fx, fy]) => ({ x: fx * (700 - NODE_W), y: fy * (1200 - NODE_H) }))
   );
-  const [cSize, setCSize] = useState({ w: 700, h: 560 });
+  const [cSize, setCSize] = useState({ w: 700, h: 1200 });
   const [hovered, setHovered] = useState(null);
   const [selected, setSelected] = useState(null);
 
@@ -741,7 +755,7 @@ export default function WeeklyReports() {
           transition={{ duration: 0.8, delay: 0.3 }}
           ref={containerRef}
           className="relative w-full select-none"
-          style={{ height: 580 }}
+          style={{ height: 1200 }}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
           onMouseUp={onMouseUp}

@@ -1124,7 +1124,7 @@ function ResumeVideo() {
                 height="100%"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                sandbox="allow-scripts allow-popups"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
                 allowFullScreen
                 loading="lazy"
                 className="block"
