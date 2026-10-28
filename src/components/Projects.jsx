@@ -16,6 +16,16 @@ const projects = [
     featured: true,
   },
   {
+    title: 'Science and Technology Policy Information System',
+    description:
+      'Centralized platform that streamlines the management of internal and external policies within DOST–PCIEERD while ensuring confidentiality, integrity, and accessibility of information.',
+    tags: ['Laravel', 'MySQL', 'React'],
+    accent: '#32d74b',
+    github: '#',
+    live: 'https://stpis.pcieerd.dost.gov.ph/',
+    featured: false,
+  },
+  {
     title: 'AI Powered Legal Docs Assistant',
     description:
       'Smart document assistant that uses AI to analyze, summarize, and extract key insights from legal documents, contracts, and case files, built with React and SpringBoot.',
@@ -33,16 +43,6 @@ const projects = [
     accent: '#ff375f',
     github: '#',
     live: 'https://youtu.be/kEAUVxEGyjM',
-    featured: false,
-  },
-  {
-    title: 'Science and Technology Policy Information System',
-    description:
-      'Centralized platform that streamlines the management of internal and external policies within DOST–PCIEERD while ensuring confidentiality, integrity, and accessibility of information.',
-    tags: ['Laravel', 'MySQL', 'React'],
-    accent: '#32d74b',
-    github: '#',
-    live: 'https://stpis.pcieerd.dost.gov.ph/',
     featured: false,
   },
 ];
