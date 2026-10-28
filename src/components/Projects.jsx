@@ -36,13 +36,13 @@ const projects = [
     featured: false,
   },
   {
-    title: 'Feedback and Assessment System',
+    title: 'Science and Technology Policy Information System',
     description:
-      'Simple web app for collecting and analyzing feedback, built with JSP and MySQL.',
-    tags: ['JSP', 'MySQL', 'Java', 'Bootstrap'],
+      'Centralized platform that streamlines the management of internal and external policies within DOST–PCIEERD while ensuring confidentiality, integrity, and accessibility of information.',
+    tags: ['Laravel', 'MySQL', 'React'],
     accent: '#32d74b',
-    github: 'https://github.com/laffeyy0629/Feedback-and-Assessment-System',
-    live: '#',
+    github: '#',
+    live: 'https://stpis.pcieerd.dost.gov.ph/',
     featured: false,
   },
 ];
